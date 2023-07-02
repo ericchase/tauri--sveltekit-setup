@@ -1,0 +1,37 @@
+{
+  "name": "tauri-sveltekit",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "vite": "vite",
+    "dev": "tauri dev",
+    "build": "tauri build",
+    "preview": "vite preview",
+    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+    "lint": "prettier --plugin-search-dir . --check . && eslint .",
+    "format": "prettier --plugin-search-dir . --write ."
+  },
+  "devDependencies": {
+    "@sveltejs/adapter-auto": "^2.1.0",
+    "@sveltejs/adapter-static": "1.0.0-next.50",
+    "@sveltejs/kit": "^1.21.0",
+    "@tauri-apps/cli": "^1.4.0",
+    "@typescript-eslint/eslint-plugin": "^5.60.1",
+    "@typescript-eslint/parser": "^5.60.1",
+    "eslint": "^8.44.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-svelte": "^2.32.2",
+    "prettier": "^2.8.8",
+    "prettier-plugin-svelte": "^2.10.1",
+    "svelte": "^4.0.1",
+    "svelte-check": "^3.4.4",
+    "tslib": "^2.6.0",
+    "typescript": "^5.1.6",
+    "vite": "^4.3.9"
+  },
+  "type": "module",
+  "dependencies": {
+    "@tauri-apps/api": "^1.4.0"
+  }
+}

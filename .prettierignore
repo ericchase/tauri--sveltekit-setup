@@ -1,0 +1,19 @@
+!.env.example
+.DS_Store
+.env
+.env.*
+/.svelte-kit
+/build
+/package
+node_modules
+
+# IDE files
+.vscode
+
+# Ignore files for PNPM, NPM and YARN
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# Ignore tauri files
+/src-tauri
