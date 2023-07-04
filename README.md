@@ -151,7 +151,7 @@ cargo update
 > [package]
 > name = "app"
 > version = "0.0.1"
-> description = " < APP DESCRIPTION !!!!!!!!!!!!!!!!! > "
+> description = "<APP DESCRIPTION !!!!!!!!!!!!!!!!!>"
 > authors = ["you"]
 > license = ""
 > repository = ""
@@ -196,6 +196,7 @@ Add extra settings for Tauri config.
 >       }
 >     },
 >     "bundle": {
+>       "identifier": "<APP IDENTIFIER !!!!!!!!!!!!!!!!!>",
 >       "windows": {
 >         "webviewInstallMode": {
 >           "type": "offlineInstaller"
