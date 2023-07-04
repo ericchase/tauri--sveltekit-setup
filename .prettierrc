@@ -1,4 +1,5 @@
 {
+  "endOfLine": "lf",
   "overrides": [{ "files": "*.svelte", "options": { "parser": "svelte" } }],
   "plugins": ["prettier-plugin-svelte"],
   "pluginSearchDirs": ["."],

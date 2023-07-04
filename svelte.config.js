@@ -7,10 +7,6 @@ const config = {
   preprocess: vitePreprocess(),
   kit: {
     adapter: adapter(),
-    alias: {
-      $routes: 'src/routes',
-      $src: 'src',
-    },
   },
 };
 

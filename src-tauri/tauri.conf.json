@@ -3,16 +3,19 @@
   "build": {
     "beforeBuildCommand": "pnpm vite build",
     "beforeDevCommand": "pnpm vite dev",
-    "devPath": "http://localhost:5173",
+    "devPath": "http://localhost:5180",
     "distDir": "../build"
   },
   "package": {
-    "productName": "tauri-sveltekit",
+    "productName": "tauri",
     "version": "0.0.1"
   },
   "tauri": {
     "allowlist": {
-      "all": false
+      "all": false,
+      "fs": {
+        "scope": ["$RUNTIME/*"]
+      }
     },
     "bundle": {
       "active": true,
@@ -22,14 +25,8 @@
         "depends": []
       },
       "externalBin": [],
-      "icon": [
-        "icons/32x32.png",
-        "icons/128x128.png",
-        "icons/128x128@2x.png",
-        "icons/icon.icns",
-        "icons/icon.ico"
-      ],
-      "identifier": "ericchase.com.github",
+      "icon": ["icons/32x32.png", "icons/128x128.png", "icons/128x128@2x.png", "icons/icon.icns", "icons/icon.ico"],
+      "identifier": "com.tauri.dev",
       "longDescription": "",
       "macOS": {
         "entitlements": null,
@@ -61,7 +58,7 @@
         "fullscreen": false,
         "height": 600,
         "resizable": true,
-        "title": "Tauri-SvelteKit",
+        "title": "tauri",
         "width": 800
       }
     ]

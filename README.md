@@ -31,6 +31,24 @@ pnpm add -D @sveltejs/adapter-static@next
 > export default config;
 > ```
 
+> `vite.config.ts`
+>
+> ```
+> import { sveltekit } from '@sveltejs/kit/vite';
+> import { defineConfig } from 'vite';
+>
+> export default defineConfig({
+>   plugins: [sveltekit()],
+>   // strict port for tauri
+>   server: {
+>     port: 5180,
+>     strictPort: true,
+>   },
+>   // don't clear the logs
+>   clearScreen: false,
+> });
+> ```
+
 > `src/routes/+layout.ts`
 >
 > ```
@@ -44,7 +62,8 @@ pnpm add -D @sveltejs/adapter-static@next
 > "scripts": {
 >   "vite": "vite",
 >   "dev": "tauri dev",
->   "build": "tauri build",
+>   "build": "tauri build -b none",
+>   "debug": "tauri build -v -b none -d",
 >   "preview": "vite preview",
 >   "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 >   "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
@@ -57,6 +76,7 @@ pnpm add -D @sveltejs/adapter-static@next
 >
 > ```
 > {
+>   "endOfLine": "lf",
 >   "overrides": [{ "files": "*.svelte", "options": { "parser": "svelte" } }],
 >   "plugins": ["prettier-plugin-svelte"],
 >   "pluginSearchDirs": ["."],
@@ -87,7 +107,7 @@ pnpm add -D @sveltejs/adapter-static@next
 > yarn.lock
 >
 > # Ignore tauri files
-> /src-tauri
+> /src-tauri/target
 > ```
 
 ```
@@ -105,7 +125,7 @@ pnpm tauri init
    `../build`
 
 4. What is the URL of your dev server?
-   `http://localhost:5173`
+   `http://localhost:5180`
 
 5. What is your frontend dev command?
    `pnpm vite dev`
@@ -125,7 +145,95 @@ cd src-tauri
 cargo update
 ```
 
-Add a Command
+> `Cargo.toml`
+>
+> ```
+> [package]
+> name = "app"
+> version = "0.0.1"
+> description = " < APP DESCRIPTION !!!!!!!!!!!!!!!!! > "
+> authors = ["you"]
+> license = ""
+> repository = ""
+> default-run = "app"
+> edition = "2021"
+> rust-version = "1.60"
+>
+> # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+>
+> [build-dependencies]
+> tauri-build = { version = "1.4.0" }
+>
+> [dependencies]
+> serde_json = "1.0"
+> serde = { version = "1.0", features = ["derive"] }
+> tauri = { version = "1.4.0", features = ["windows7-compat"] }
+>
+> [features]
+> # this feature is used for production builds or when `devPath` points to the filesystem and the built-in dev server is disabled.
+> # If you use cargo directly instead of tauri's cli you can use this feature flag to switch between tauri's `dev` and `build` modes.
+> # DO NOT REMOVE!!
+> custom-protocol = ["tauri/custom-protocol"]
+> ```
+
+Add extra settings for Tauri config.
+
+> `tauri.conf.json`
+>
+> ```
+> {
+>   "build": {
+>     "beforeBuildCommand": "pnpm vite build",
+>     "beforeDevCommand": "pnpm vite dev",
+>     "devPath": "http://localhost:5180",
+>     "distDir": "../build"
+>   },
+>   "tauri": {
+>     "allowlist": {
+>       "all": false,
+>       "fs": {
+>         "scope": ["$RUNTIME/*"]
+>       }
+>     },
+>     "bundle": {
+>       "windows": {
+>         "webviewInstallMode": {
+>           "type": "offlineInstaller"
+>         }
+>       }
+>     }
+>   }
+> }
+> ```
+
+> `rustfmt.toml`
+>
+> ```
+> tab_spaces = 2
+> ```
+
+_**GOTCHA:**_ Do not put `./*` in the `resources` array under `bundle` in the tauri config.
+
+```
+  "bundle": {
+    "resources": [],
+```
+
+Startup the app!
+
+```
+pnpm dev
+```
+
+# Build
+
+https://tauri.app/v1/guides/building/windows
+
+```
+pnpm build
+```
+
+# Add a Command
 
 ```
 pnpm add @tauri-apps/api
@@ -181,15 +289,3 @@ pnpm add @tauri-apps/api
 > <h1>Welcome to SvelteKit</h1>
 > <Greet />
 > ```
-
-```
-pnpm tauri dev
-```
-
-# Build
-
-https://tauri.app/v1/guides/building/windows
-
-```
-pnpm build
-```
